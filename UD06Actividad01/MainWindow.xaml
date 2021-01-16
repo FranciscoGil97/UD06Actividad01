@@ -5,18 +5,146 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:UD06Actividad01"
+    xmlns:emisor="clr-namespace:UD06Actividad01;assembly=UD06Actividad01"
     mc:Ignorable="d"
     Title="ChatBot"
     Height="600"
-    Width="400">
+    Width="450"
+    MinWidth="250"
+    MinHeight="300"
+    Icon="robot.ico">
     <Window.Resources>
         <Style
-            TargetType="Button" x:Key="botonesToolBar">
+            x:Key="imagenEmisor"
+            TargetType="Image">
+            <Setter
+                Property="Height"
+                Value="20" />
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding Path=_Emisor}"
+                    Value="{x:Static emisor:Mensajes+Emisor.Usuario}">
+                    <Setter
+                        Property="Source"
+                        Value="hombre.png" />
+                </DataTrigger>
+                <DataTrigger
+                    Binding="{Binding Path=_Emisor}"
+                    Value="{x:Static emisor:Mensajes+Emisor.Bot}">
+                    <Setter
+                        Property="Source"
+                        Value="robot.png" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="tipoMensaje"
+            TargetType="Border">
+            <Setter
+                Property="Margin"
+                Value="5,5,40,5" />
+            <Setter
+                Property="Background"
+                Value="PaleGreen" />
+            <Setter
+                Property="BorderThickness"
+                Value="3" />
+            <Setter
+                Property="BorderBrush"
+                Value="Black" />
+            <Setter
+                Property="DockPanel.Dock"
+                Value="Left" />
+            <Setter
+                Property="Padding"
+                Value="5" />
+            
+            <Style.Triggers>
+                <DataTrigger
+                    Binding="{Binding Path=_Emisor}"
+                    Value="{x:Static emisor:Mensajes+Emisor.Bot}">
+                    <Setter
+                        Property="DockPanel.Dock"
+                        Value="Right" />
+                    <Setter
+                        Property="Background"
+                        Value="LightBlue" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate
+            x:Key="listaMensajes" >
+            <DockPanel
+                LastChildFill="False">
+                <Border
+                    Style="{StaticResource tipoMensaje}"
+                    CornerRadius="4"
+                    MinHeight="40"
+                    MinWidth="80">
+                    <StackPanel>
+                        <DockPanel>
+                            <Image
+                                Style="{StaticResource imagenEmisor}" />
+                            <TextBlock
+                                Text="{Binding Path=_Emisor}"
+                                FontWeight="Bold"
+                                VerticalAlignment="Center"
+                                Margin="5,0,0,0" />
+                        </DockPanel>
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            Text="{Binding Path=Mensaje}" 
+                            FontSize="17"/>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </DataTemplate>
+
+
+        <Style
+            TargetType="Button"
+            x:Key="botonesToolBar">
             <Setter
                 Property="Height"
                 Value="30" />
         </Style>
+
     </Window.Resources>
+
+    <Window.CommandBindings>
+        <CommandBinding
+            Command="local:ChatCommands.Enviar"
+            Executed="Enviar_Executed"
+            CanExecute="Enviar_CanExecute" />
+
+        <CommandBinding
+            Command="local:ChatCommands.NuevaConversacion"
+            Executed="NuevaConversacion_Executed"
+            CanExecute="NuevaConversacion_CanExecute" />
+
+        <CommandBinding
+            Command="local:ChatCommands.Guardar"
+            Executed="Guardar_Executed"
+            CanExecute="Guardar_CanExecute" />
+
+        <CommandBinding
+            Command="local:ChatCommands.Salir"
+            Executed="Salir_Executed"
+            CanExecute="Salir_CanExecute" />
+
+        <CommandBinding
+            Command="local:ChatCommands.Configuracion"
+            Executed="Configuracion_Executed"
+            CanExecute="Configuracion_CanExecute" />
+
+        <CommandBinding
+            Command="local:ChatCommands.ComprobarConexion"
+            Executed="ComprobarConexion_Executed"
+            CanExecute="ComprobarConexion_CanExecute" />
+
+    </Window.CommandBindings>
     <DockPanel
         LastChildFill="True">
         <Menu
@@ -24,14 +152,16 @@
             <MenuItem
                 Header="_Archivo">
                 <MenuItem
-                    Header="_Nueva conversación">
+                    Header="_Nueva conversación"
+                    Command="local:ChatCommands.NuevaConversacion">
                     <MenuItem.Icon>
                         <Image
                             Source="new.png" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
-                    Header="_Guardar conversación">
+                    Header="_Guardar conversación"
+                    Command="local:ChatCommands.Guardar">
                     <MenuItem.Icon>
                         <Image
                             Source="save.png" />
@@ -39,7 +169,8 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem
-                    Header="_Salir">
+                    Header="_Salir"
+                    Command="local:ChatCommands.Salir">
                     <MenuItem.Icon>
                         <Image
                             Source="exit.ico" />
@@ -49,14 +180,16 @@
             <MenuItem
                 Header="_Herramientas">
                 <MenuItem
-                    Header="_Configuración...">
+                    Header="_Configuración..."
+                    Command="local:ChatCommands.Configuracion">
                     <MenuItem.Icon>
                         <Image
                             Source="config.ico" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
-                    Header="C_omprobar conexión">
+                    Header="C_omprobar conexión"
+                    Command="local:ChatCommands.ComprobarConexion">
                     <MenuItem.Icon>
                         <Image
                             Source="check.png" />
@@ -106,8 +239,27 @@
                 </Button>
             </ToolBar>
         </ToolBarTray>
+        <DockPanel
+            DockPanel.Dock="Bottom"
+            LastChildFill="True">
+            <Button
+                DockPanel.Dock="Right"
+                Command="local:ChatCommands.Enviar">
+                <Image
+                    Source="send.png"
+                    Height="30" />
+            </Button>
+            <TextBox
+                x:Name="mensajeUsuarioTextBox"
+                BorderBrush="Black"
+                BorderThickness="3"
+                FontSize="16" />
+        </DockPanel>
         <ItemsControl
-            Background="LightYellow">
+            x:Name="listaMensajesItemsControl"
+            Background="LightYellow"
+            ItemsSource="{Binding}"
+            ItemTemplate="{StaticResource listaMensajes}">
 
         </ItemsControl>
     </DockPanel>
