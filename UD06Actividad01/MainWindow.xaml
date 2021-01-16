@@ -9,7 +9,16 @@
     Title="ChatBot"
     Height="600"
     Width="400">
-    <DockPanel LastChildFill="True">
+    <Window.Resources>
+        <Style
+            TargetType="Button" x:Key="botonesToolBar">
+            <Setter
+                Property="Height"
+                Value="30" />
+        </Style>
+    </Window.Resources>
+    <DockPanel
+        LastChildFill="True">
         <Menu
             DockPanel.Dock="Top">
             <MenuItem
@@ -60,39 +69,45 @@
             <ToolBar>
                 <Button
                     ToolTip="Nueva conversación"
-                    FontFamily="Wingdins">
+                    FontFamily="Wingdins"
+                    Style="{StaticResource botonesToolBar}">
                     <Image
                         Source="new.png" />
                 </Button>
                 <Button
                     ToolTip="Guardar conversación"
-                    FontFamily="Wingdins">
+                    FontFamily="Wingdins"
+                    Style="{StaticResource botonesToolBar}">
                     <Image
                         Source="save.png" />
                 </Button>
                 <Separator />
                 <Button
                     ToolTip="Configuración"
-                    FontFamily="Wingdins">
+                    FontFamily="Wingdins"
+                    Style="{StaticResource botonesToolBar}">
                     <Image
                         Source="config.ico" />
                 </Button>
                 <Button
                     ToolTip="Comprobar conexión"
-                    FontFamily="Wingdins">
+                    FontFamily="Wingdins"
+                    Style="{StaticResource botonesToolBar}">
                     <Image
                         Source="check.png" />
                 </Button>
                 <Separator />
                 <Button
                     ToolTip="Salir"
-                    FontFamily="Wingdins">
+                    FontFamily="Wingdins"
+                    Style="{StaticResource botonesToolBar}">
                     <Image
                         Source="exit.ico" />
                 </Button>
             </ToolBar>
         </ToolBarTray>
-        <ItemsControl Background="LightYellow">
+        <ItemsControl
+            Background="LightYellow">
 
         </ItemsControl>
     </DockPanel>
