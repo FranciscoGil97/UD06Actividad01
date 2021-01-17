@@ -203,14 +203,16 @@
                 <Button
                     ToolTip="Nueva conversación"
                     FontFamily="Wingdins"
-                    Style="{StaticResource botonesToolBar}">
+                    Style="{StaticResource botonesToolBar}"
+                    Command="local:ChatCommands.NuevaConversacion">
                     <Image
                         Source="new.png" />
                 </Button>
                 <Button
                     ToolTip="Guardar conversación"
                     FontFamily="Wingdins"
-                    Style="{StaticResource botonesToolBar}">
+                    Style="{StaticResource botonesToolBar}"
+                    Command="local:ChatCommands.Guardar">
                     <Image
                         Source="save.png" />
                 </Button>
@@ -218,14 +220,16 @@
                 <Button
                     ToolTip="Configuración"
                     FontFamily="Wingdins"
-                    Style="{StaticResource botonesToolBar}">
+                    Style="{StaticResource botonesToolBar}"
+                    Command="local:ChatCommands.Configuracion">
                     <Image
                         Source="config.ico" />
                 </Button>
                 <Button
                     ToolTip="Comprobar conexión"
                     FontFamily="Wingdins"
-                    Style="{StaticResource botonesToolBar}">
+                    Style="{StaticResource botonesToolBar}"
+                    Command="local:ChatCommands.ComprobarConexion">
                     <Image
                         Source="check.png" />
                 </Button>
@@ -233,7 +237,8 @@
                 <Button
                     ToolTip="Salir"
                     FontFamily="Wingdins"
-                    Style="{StaticResource botonesToolBar}">
+                    Style="{StaticResource botonesToolBar}"
+                    Command="local:ChatCommands.Salir">
                     <Image
                         Source="exit.ico" />
                 </Button>
